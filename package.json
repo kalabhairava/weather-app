@@ -1,0 +1,31 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "A simple weather app to get my hands dirty with asynchronous programming in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalabhairava/weather-app.git"
+  },
+  "keywords": [
+    "nodejs",
+    "asynchronous"
+  ],
+  "author": "Manjunatha D",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kalabhairava/weather-app/issues"
+  },
+  "homepage": "https://github.com/kalabhairava/weather-app#readme",
+  "devDependencies": {
+    "eslint": "^4.11.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1"
+  }
+}
