@@ -56,4 +56,7 @@ console.log("Finishing app");
 // Queue of all the callback functions ready to get fired
 // All the callback functions will be waiting until the Call Stack is empty
 
-// TODO: Add links to articles that exlain event loop
+// IMPORTANT!!! => Go through these links
+
+// 1. http://latentflip.com/loupe/ => Visualize what happens behind the scenes
+// 2. https://www.youtube.com/watch?v=8aGhZQkoFbQ => JSConf talk by Philip Roberts, the guy behind loupe (Link above)
