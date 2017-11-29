@@ -2,14 +2,47 @@
 // 3rd Party Modules
 // -------------------------------------------------
 const request = require("request");
+const yargs = require("yargs");
+
+// -------------------------------------------------
+// Private Variables
+// -------------------------------------------------
+
+const googleMapsAPI =
+  "https://maps.googleapis.com/maps/api/geocode/json?address=";
+
+// Since there is only one command (to fetch weather), why make the user type it? That's the reason we don't add any commands here
+// Just add a flag to pass the address
+// yargs.options() takes a configuration object
+const argv = yargs
+  .options({
+    address: {
+      demand: true,
+      alias: "a",
+      describe: "Address to fetch the weather for",
+      string: true // tells yargs to parse 'address' as a string
+    }
+  })
+  .help()
+  .alias("help", "h") // Another way of setting alias
+  .alias("version", "v").argv;
+
+console.log(argv);
+
+const address = argv.address;
+// It worked even without encoding address. Explore why? => That's because request method encodes it for you if you haven't done it already
+
+// Encodes special characters like space, at, bang, etc
+// Not necessary. The request module does it for you. Just adding it here so that you're aware of it.
+const encodedAddress = encodeURIComponent(address);
 
 request(
   {
-    url:
-      "https://maps.googleapis.com/maps/api/geocode/json?address=12th%20cross%20bendrenagar%20560070",
+    url: googleMapsAPI + encodedAddress,
     json: true // converts json string to JS value
   },
   (error, response, body) => {
+    // console.log(response.request);
     // console.log(body);
     // logs the below output. Notice that arrays and objects are not printed properly
     // { results:
