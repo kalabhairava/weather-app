@@ -27,7 +27,7 @@ const argv = yargs
   .alias("help", "h") // Another way of setting alias
   .alias("version", "v").argv;
 
-console.log(argv);
+// console.log(argv);
 
 const address = argv.address;
 // It worked even without encoding address. Explore why? => That's because request method encodes it for you if you haven't done it already
@@ -81,8 +81,20 @@ request(
     //   "port": 443
     // }
 
-    console.log(`Address: ${body.results[0].formatted_address}`);
-    console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
-    console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
+    // -------------------------------------------------
+    // Error Handling
+    // -------------------------------------------------
+
+    if (error) { // Client side error => not able to make the request
+      console.log('Unable to connet to Google servers');
+    } else if (body.status === 'ZERO_RESULTS') { // No data returned from the server => invalid address
+      console.log('Unable to find that address');
+    } else if (body.status === 'OVER_QUERY_LIMIT') { // Query limit over
+      console.log('Note to developer: You have exceeded your daily quota of requests to Google Maps API');
+    } else if (body.status === 'OK') { // All good. Don't just use else block here. Always include a condition to make sure that you are receiving correct data. DO NOT ASSUME THAT IF ALL ERROR CONDITIONS ARE SKIPPED, THE DATA MUST BE VALID. You may not be testing for all errors.
+      console.log(`Address: ${body.results[0].formatted_address}`);
+      console.log(`Latitude: ${body.results[0].geometry.location.lat}`);
+      console.log(`Longitude: ${body.results[0].geometry.location.lng}`);
+    }
   }
 );
