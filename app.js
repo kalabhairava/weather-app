@@ -3,6 +3,7 @@
 // -------------------------------------------------
 const yargs = require("yargs");
 const geocode = require('./geocode/geocode.js');
+const weather = require('./weather/weather.js');
 
 // Since there is only one command (to fetch weather), why make the user type it? That's the reason we don't add any commands here
 // Just add a flag to pass the address
@@ -35,6 +36,17 @@ geocode.geocodeAddress(encodedAddress, (errorMessage, address) => {
   if (errorMessage) {
     console.log(errorMessage);
   } else {
-    console.log(JSON.stringify(address, undefined, 2));
+    // console.log(JSON.stringify(address, undefined, 2));
+  
+    weather.currentWeather(address.latitude, address.longitude, (errorMessage, weather) => {
+      if(errorMessage) {
+        console.log(errorMessage);
+      } else {
+        console.log(`Temperature: ${weather.temperature}`);
+      }
+    });
   }
 });
+
+
+
