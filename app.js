@@ -2,8 +2,8 @@
 // Dependencies
 // -------------------------------------------------
 const yargs = require("yargs");
-const geocode = require('./geocode/geocode.js');
-const weather = require('./weather/weather.js');
+const geocode = require("./geocode/geocode.js");
+const weather = require("./weather/weather.js");
 
 // Since there is only one command (to fetch weather), why make the user type it? That's the reason we don't add any commands here
 // Just add a flag to pass the address
@@ -32,21 +32,44 @@ const encodedAddress = encodeURIComponent(address);
 
 // abstract the logic that gets the longitude and latitude of an address
 // app.js does not need to be aware of this logic
-geocode.geocodeAddress(encodedAddress, (errorMessage, address) => {
-  if (errorMessage) {
-    console.log(errorMessage);
-  } else {
-    // console.log(JSON.stringify(address, undefined, 2));
-  
-    weather.currentWeather(address.latitude, address.longitude, (errorMessage, weather) => {
-      if(errorMessage) {
-        console.log(errorMessage);
-      } else {
-        console.log(`Temperature: ${weather.temperature}`);
-      }
-    });
-  }
-});
 
+// -------------------------------------------------
+// Callback approach
+// -------------------------------------------------
 
+// geocode.geocodeAddress(encodedAddress, (errorMessage, address) => {
+//   if (errorMessage) {
+//     console.log(errorMessage);
+//   } else {
+//     // console.log(JSON.stringify(address, undefined, 2));
 
+//     weather.currentWeather(address.latitude, address.longitude, (errorMessage, weather) => {
+//       if(errorMessage) {
+//         console.log(errorMessage);
+//       } else {
+//         console.log(`Temperature: ${weather.temperature}`);
+//       }
+//     });
+//   }
+// });
+
+// -------------------------------------------------
+// Promise based approach
+// -------------------------------------------------
+
+geocode
+  .geocodeAddress(encodedAddress)
+  .then(address => {
+    // console.log(address);
+    weather
+      .currentWeather(address.latitude, address.longitude)
+      .then(result => {
+        console.log("Temperature", result.temperature);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  })
+  .catch(error => {
+    console.log(error);
+  });
