@@ -7,7 +7,7 @@ const request = require("request");
 // Private Variables
 // -------------------------------------------------
 const googleMapsAPI =
-    "https://maps.googleapis.com/maps/api/geocode/json?address=";
+  "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
 // -------------------------------------------------
 // Callbacks approach
@@ -87,36 +87,36 @@ const googleMapsAPI =
 // -------------------------------------------------
 
 // 'request' library doesn't support promises. So we need to wrap our function calls in a promise
-const geocodeAddress = function (encodedAddress) {
-    return new Promise((resolve, reject) => {
-        request(
-            {
-                url: googleMapsAPI + encodedAddress,
-                json: true
-            },
-            (error, response, body) => {
-                if (error) {
-                    reject("Unable to connect to Google Servers");
-                } else if (body.status === "ZERO_RESULTS") {
-                    // No data returned from the server => invalid address
-                    reject("Unable to find that address");
-                } else if (body.status === "OVER_QUERY_LIMIT") {
-                    // Query limit over
-                    reject(
-                        "Note to developer: You have exceeded your daily quota of requests to Google Maps API"
-                    );
-                } else if (body.status === "OK") {
-                    // All good. Don't just use else block here. Always include a condition to make sure that you are receiving correct data. DO NOT ASSUME THAT IF ALL ERROR CONDITIONS ARE SKIPPED, THE DATA MUST BE VALID. You may not be testing for all errors.
-                    const address = {
-                        formatted_address: body.results[0].formatted_address,
-                        latitude: body.results[0].geometry.location.lat,
-                        longitude: body.results[0].geometry.location.lng
-                    };
-                    resolve(address);
-                }
-            }
-        );
-    });
+const geocodeAddress = function(encodedAddress) {
+  return new Promise((resolve, reject) => {
+    request(
+      {
+        url: googleMapsAPI + encodedAddress,
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          reject("Unable to connect to Google Servers");
+        } else if (body.status === "ZERO_RESULTS") {
+          // No data returned from the server => invalid address
+          reject("Unable to find that address");
+        } else if (body.status === "OVER_QUERY_LIMIT") {
+          // Query limit over
+          reject(
+            "Note to developer: You have exceeded your daily quota of requests to Google Maps API"
+          );
+        } else if (body.status === "OK") {
+          // All good. Don't just use else block here. Always include a condition to make sure that you are receiving correct data. DO NOT ASSUME THAT IF ALL ERROR CONDITIONS ARE SKIPPED, THE DATA MUST BE VALID. You may not be testing for all errors.
+          const address = {
+            formatted_address: body.results[0].formatted_address,
+            latitude: body.results[0].geometry.location.lat,
+            longitude: body.results[0].geometry.location.lng
+          };
+          resolve(address);
+        }
+      }
+    );
+  });
 };
 
 module.exports.geocodeAddress = geocodeAddress;

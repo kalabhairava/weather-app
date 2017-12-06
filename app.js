@@ -61,6 +61,10 @@ geocode
   .geocodeAddress(encodedAddress)
   .then(address => {
     console.log(JSON.stringify(address, undefined, 2));
+
+    // Don't run promises inside promises. return a promise here: something like `return weather.currentWeather()`
+    // And chain a then() call
+    // See how it is done in promise-based-weather/app.js
     weather
       .currentWeather(address.latitude, address.longitude)
       .then(result => {
