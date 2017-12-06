@@ -60,7 +60,7 @@ const encodedAddress = encodeURIComponent(address);
 geocode
   .geocodeAddress(encodedAddress)
   .then(address => {
-    // console.log(address);
+    console.log(JSON.stringify(address, undefined, 2));
     weather
       .currentWeather(address.latitude, address.longitude)
       .then(result => {
@@ -69,6 +69,10 @@ geocode
       .catch(error => {
         console.log(error);
       });
+    // If you don't have a catch block here, it will thow a warning:
+    // (node:211752) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): The given location is invalid
+    // (node:211752) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+    // The errors of inner promises are not handled by catch() of outer promises
   })
   .catch(error => {
     console.log(error);
