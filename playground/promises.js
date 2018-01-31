@@ -8,6 +8,14 @@
 
 // console.log('End');
 
+/** 
+    * `Promise(executor function(resolve, reject))` => creates a promise
+    * `Promise.all(iterable)` => returns a promise that is fulfilled only after all the promises in the iterable argument are fulfilled or rejected as soon as one of them is rejected.
+    * `Promise.race(iterable)` => returns a promise that is fulfilled or rejected as soon as one of the promises in the iterable is resolved or rejected.
+    * `Promise.resolve(data)` => returns a promise that is resolved with the given data. Useful when you want to create and resolve a promises immediately
+    * `Promise.reject(reason)` => retunrs a promise that is rejected with the given reason. Useful when you want to create and reject a promises immediately
+*/
+
 // Advantages of promises:
 // You cannot resolve/reject a promise twice, whereas you can call a callback twice. Using promises prevents this kind of accidental errors.
 // Once a promise is resolved/rejected, all the following resolve/reject calls are ignored.
